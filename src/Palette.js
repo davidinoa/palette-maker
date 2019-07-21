@@ -16,7 +16,6 @@ class Palette extends Component {
   }
 
   changeFormat(format) {
-    console.log(format);
     this.setState({ format });
   }
 
