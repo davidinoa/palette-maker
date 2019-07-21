@@ -48,7 +48,7 @@ class PaletteList extends Component {
       <div className={classes.root}>
         <div className={classes.container}>
           <nav className={classes.nav}>
-            <h1>Palette Maker</h1>
+            <h1>Color Picker</h1>
           </nav>
           <div className={classes.palettes}>
             {palettes.map((palette) => (
