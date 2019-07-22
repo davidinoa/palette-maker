@@ -80,7 +80,8 @@ class NewPaletteForm extends Component {
     this.state = {
       open: false,
       currentColor: 'teal',
-      newName: '',
+      newColorName: '',
+      newPaletteName: '',
       colors: [{ name: 'blue', color: 'blue' }],
     };
 
@@ -93,13 +94,17 @@ class NewPaletteForm extends Component {
   }
 
   componentDidMount() {
-    ValidatorForm.addValidationRule('isColorNameUnique', (value) => {
-      this.state.colors.every(({ name }) => name.toLowerCase() !== value.toLowerCase());
-    });
+    ValidatorForm.addValidationRule('isColorNameUnique', (value) =>
+      this.state.colors.every(({ name }) => name.toLowerCase() !== value.toLowerCase()),
+    );
 
-    ValidatorForm.addValidationRule('isColorUnique', () => {
-      this.state.colors.every(({ color }) => color.toLowerCase() !== this.state.currentColor);
-    });
+    ValidatorForm.addValidationRule('isColorUnique', () =>
+      this.state.colors.every(({ color }) => color !== this.state.currentColor),
+    );
+
+    ValidatorForm.addValidationRule('isPaletteNameUnique', (value) =>
+      this.props.palettes.every(({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()),
+    );
   }
 
   handleDrawerOpen() {
@@ -115,21 +120,21 @@ class NewPaletteForm extends Component {
   }
 
   addNewColor() {
-    const newColor = { color: this.state.currentColor, name: this.state.newName };
-    this.setState({ colors: [...this.state.colors, newColor], newName: '' });
+    const newColorName = { color: this.state.currentColor, name: this.state.newColorName };
+    this.setState({ colors: [...this.state.colors, newColorName], newColorName: '' });
   }
 
   handleChange(e) {
-    this.setState({ newName: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit() {
     const colors = [...this.state.colors];
-    let newName = 'New Test Palette';
+    const newPaletteName = this.state.newPaletteName;
 
     const newPalette = {
-      paletteName: newName,
-      id: newName.toLocaleLowerCase().replace(/ /g, '-'),
+      id: newPaletteName.toLocaleLowerCase().replace(/ /g, '-'),
+      paletteName: newPaletteName,
       colors,
     };
 
@@ -138,8 +143,8 @@ class NewPaletteForm extends Component {
   }
 
   render() {
+    const { open, colors, newColorName, newPaletteName } = this.state;
     const { classes } = this.props;
-    const { open, colors } = this.state;
 
     return (
       <div className={classes.root}>
@@ -162,9 +167,19 @@ class NewPaletteForm extends Component {
             <Typography variant="h6" color="inherit" noWrap>
               Persistent drawer
             </Typography>
-            <Button variant="contained" color="primary" onClick={this.handleSubmit}>
-              Save Palette
-            </Button>
+            <ValidatorForm onSubmit={this.handleSubmit}>
+              <TextValidator
+                label="Palette Name"
+                value={newPaletteName}
+                name="newPaletteName"
+                onChange={this.handleChange}
+                validators={['required', 'isPaletteNameUnique']}
+                errorMessages={['Enter palette name', 'Palette name must be unique']}
+              />
+              <Button variant="contained" color="primary" type="submit">
+                Save Palette
+              </Button>
+            </ValidatorForm>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -191,12 +206,13 @@ class NewPaletteForm extends Component {
             </Button>
           </div>
           <ChromePicker color={this.state.currentColor} onChangeComplete={this.updateCurrentColor} />
-          <ValidatorForm onSubmit={this.addNewColor}>
+          <ValidatorForm onSubmit={this.addNewColor} ref="form">
             <TextValidator
+              value={newColorName}
+              name="newColorName"
+              onChange={this.handleChange}
               validators={['required', 'isColorNameUnique', 'isColorUnique']}
               errorMessages={['Enter a color name', 'Color name must be unique', 'Color already used']}
-              value={this.state.newName}
-              onChange={this.handleChange}
             />
             <Button
               variant="contained"
