@@ -81,7 +81,7 @@ class NewPaletteForm extends Component {
       open: false,
       currentColor: 'teal',
       newName: '',
-      colors: [],
+      colors: [{ name: 'blue', color: 'blue' }],
     };
 
     this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
@@ -89,6 +89,7 @@ class NewPaletteForm extends Component {
     this.updateCurrentColor = this.updateCurrentColor.bind(this);
     this.addNewColor = this.addNewColor.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -122,6 +123,20 @@ class NewPaletteForm extends Component {
     this.setState({ newName: e.target.value });
   }
 
+  handleSubmit() {
+    const colors = [...this.state.colors];
+    let newName = 'New Test Palette';
+
+    const newPalette = {
+      paletteName: newName,
+      id: newName.toLocaleLowerCase().replace(/ /g, '-'),
+      colors,
+    };
+
+    this.props.savePalette(newPalette);
+    this.props.history.push('/');
+  }
+
   render() {
     const { classes } = this.props;
     const { open, colors } = this.state;
@@ -131,6 +146,7 @@ class NewPaletteForm extends Component {
         <CssBaseline />
         <AppBar
           position="fixed"
+          color="default"
           className={classNames(classes.appBar, {
             [classes.appBarShift]: open,
           })}>
@@ -143,9 +159,12 @@ class NewPaletteForm extends Component {
               className={classNames(classes.menuButton, open && classes.hide)}>
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap>
+            <Typography variant="h6" color="inherit" noWrap>
               Persistent drawer
             </Typography>
+            <Button variant="contained" color="primary" onClick={this.handleSubmit}>
+              Save Palette
+            </Button>
           </Toolbar>
         </AppBar>
         <Drawer
