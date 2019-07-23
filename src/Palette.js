@@ -11,12 +11,15 @@ class Palette extends Component {
     this.changeLevel = this.changeLevel.bind(this);
     this.changeFormat = this.changeFormat.bind(this);
   }
+
   changeLevel(level) {
     this.setState({ level });
   }
+
   changeFormat(val) {
     this.setState({ format: val });
   }
+
   render() {
     const { colors, paletteName, emoji, id } = this.props.palette;
     const { level, format } = this.state;

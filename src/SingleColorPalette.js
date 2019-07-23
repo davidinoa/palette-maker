@@ -14,6 +14,7 @@ class SingleColorPalette extends Component {
     this.state = { format: 'hex' };
     this.changeFormat = this.changeFormat.bind(this);
   }
+
   gatherShades(palette, colorToFilterBy) {
     let shades = [];
     let allColors = palette.colors;
@@ -23,16 +24,20 @@ class SingleColorPalette extends Component {
     }
     return shades.slice(1);
   }
+
   changeFormat(val) {
     this.setState({ format: val });
   }
+
   render() {
-    const { format } = this.state;
     const { paletteName, emoji, id } = this.props.palette;
     const { classes } = this.props;
+    const { format } = this.state;
+
     const colorBoxes = this._shades.map((color) => (
       <ColorBox key={color.name} name={color.name} background={color[format]} showingFullPalette={false} />
     ));
+
     return (
       <div className="Palette">
         <Navbar handleChange={this.changeFormat} showingAllColors={false} />

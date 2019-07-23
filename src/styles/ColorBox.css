@@ -7,6 +7,10 @@
   margin-bottom: -3.5px;
 }
 
+.ColorBox:hover button {
+  opacity: 1;
+}
+
 .seeMore {
   background: rgba(255, 255, 255, 0.3);
   position: absolute;
@@ -106,4 +110,26 @@
   z-index: 25;
   transition: all 0.4s ease-in-out;
   transition-delay: 0.3s;
+}
+
+@media (max-width: 1200px) {
+  .ColorBox {
+    width: 25%;
+  }
+}
+
+@media (max-width: 990px) {
+  .ColorBox {
+    width: 50%;
+  }
+}
+
+@media (max-width: 575px) {
+  .ColorBox {
+    width: 100%;
+  }
+
+  .copyMessage h1 {
+    font-size: 6rem;
+  }
 }
