@@ -29,7 +29,6 @@ export default {
     alignItems: 'flex-start',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    overflow: 'scroll',
     [sizes.down('xl')]: {
       width: '80%',
     },
@@ -48,7 +47,6 @@ export default {
     },
   },
   palettes: {
-    overflow: 'scroll',
     width: '100%',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 30%)',
