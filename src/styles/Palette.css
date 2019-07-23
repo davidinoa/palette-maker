@@ -2,8 +2,10 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-bottom: 250px;
 }
 
 .colors {
-  height: 90%;
+  height: 85%;
+  overflow: scroll;
 }
