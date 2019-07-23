@@ -48,6 +48,7 @@ export default {
     },
   },
   palettes: {
+    overflow: 'scroll',
     width: '100%',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 30%)',
