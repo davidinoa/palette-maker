@@ -48,6 +48,7 @@ class SingleColorPalette extends Component {
           </div>
         </div>
         <PaletteFooter paletteName={paletteName} emoji={emoji} />
+        <div style={{ height: '200px' }} />
       </div>
     );
   }

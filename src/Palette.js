@@ -39,6 +39,7 @@ class Palette extends Component {
         <Navbar level={level} changeLevel={this.changeLevel} handleChange={this.changeFormat} showingAllColors />
         <div className="colors">{colorBoxes}</div>
         <PaletteFooter paletteName={paletteName} emoji={emoji} />
+        <div style={{ height: '200px' }} />
       </div>
     );
   }
